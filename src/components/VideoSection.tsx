@@ -1,23 +1,22 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Play } from "lucide-react";
 
 export const VideoSection = () => {
-  const videos = [
+  const images = [
     {
-      title: "Diva Secret Presentation",
-      description: "Learn how Diva Secret Stem Cells can transform your health",
-      thumbnail: "/lovable-uploads/f8b83d5b-cb3a-406d-892a-42aa8873682a.png"
+      title: "Diva Secret Stem Cells",
+      description: "Revolutionary stem cell technology for natural healing",
+      image: "/lovable-uploads/cd38486d-ec02-4791-8619-6b8d57e5857b.png"
     },
     {
-      title: "Real People, Real Results",
-      description: "Hear success stories from our community",
-      thumbnail: "/lovable-uploads/4e4aa965-0fba-4de1-8b77-6c3c3dcf3ce0.png"
+      title: "Transform Your Health",
+      description: "Experience the power of cellular regeneration",
+      image: "/lovable-uploads/969859d4-026e-4541-9759-d8df0b375b3a.png"
     },
     {
-      title: "The Science Behind Stem Cells",
-      description: "Understanding how stem cell therapy works",
-      thumbnail: "/lovable-uploads/9011eb3e-279d-4abc-af35-373fb7198cd0.png"
+      title: "Natural Wellness Solutions",
+      description: "Repair, restore, and rejuvenate at the cellular level",
+      image: "/lovable-uploads/31d847f2-6d21-4c6b-bf8f-34eabd0a5cc7.png"
     }
   ];
 
@@ -30,41 +29,27 @@ export const VideoSection = () => {
             See The <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Transformation</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Watch real stories and scientific explanations behind Diva Secret Stem Cells.
+            Discover the revolutionary power of Diva Secret Stem Cells through our product showcase.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {videos.map((video, index) => (
-            <Card key={index} className="group cursor-pointer hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-lg overflow-hidden">
+          {images.map((item, index) => (
+            <Card key={index} className="group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-lg overflow-hidden">
               <div className="relative">
                 <img 
-                  src={video.thumbnail}
-                  alt={video.title}
+                  src={item.image}
+                  alt={item.title}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                  <div className="bg-white/90 rounded-full p-4 group-hover:bg-white transition-colors duration-300">
-                    <Play className="h-8 w-8 text-purple-600 ml-1" />
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{video.title}</h3>
-                <p className="text-gray-600">{video.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.description}</p>
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <p className="text-gray-600 mb-4">
-            <strong>Note:</strong> To add your videos, please upload the MP4 files: 
-            Diva Presentation.mp4, Diva Secret Cell_Dialogue_Pippit.mp4, and Diva Secret Cell_EMPOWERED.mp4
-          </p>
-          <p className="text-sm text-gray-500">
-            If video upload fails, please convert to a web-compatible format and try again.
-          </p>
         </div>
 
       </div>
