@@ -3,6 +3,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Truck, Clock } from "lucide-react";
 
 export const CTASection = () => {
+  const handlePayFastOrder = () => {
+    // Replace with your actual PayFast payment URL
+    console.log("PayFast order initiated");
+    window.open("YOUR_PAYFAST_PAYMENT_URL", "_blank");
+  };
+
   return (
     <section className="py-20 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,6 +47,7 @@ export const CTASection = () => {
         <div className="text-center space-y-8">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
+              onClick={handlePayFastOrder}
               size="lg" 
               className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-12 py-6 text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
             >
@@ -54,7 +61,7 @@ export const CTASection = () => {
               className="border-2 border-white text-white hover:bg-white hover:text-purple-900 px-12 py-6 text-xl font-bold transition-all duration-300"
               asChild
             >
-              <a href="https://wa.me/27734247729">
+              <a href="https://wa.me/27679820321">
                 💬 Chat on WhatsApp
               </a>
             </Button>

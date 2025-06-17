@@ -8,12 +8,12 @@ export const HeroSection = () => {
       <div className="absolute inset-0 bg-black opacity-40"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
         
-        {/* Diva Logo */}
+        {/* Diva Logo - Stretched */}
         <div className="flex justify-center mb-8">
           <img 
             src="/lovable-uploads/31d847f2-6d21-4c6b-bf8f-34eabd0a5cc7.png" 
             alt="Diva Secret International" 
-            className="h-20 w-auto md:h-24 lg:h-28 drop-shadow-2xl"
+            className="w-full max-w-md md:max-w-lg lg:max-w-xl h-24 md:h-32 lg:h-40 object-contain drop-shadow-2xl"
           />
         </div>
 

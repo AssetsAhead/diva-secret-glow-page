@@ -21,7 +21,7 @@ export const Footer = () => {
               <a href="https://www.facebook.com/share/1Eg5bPf487/?mibextid=qi2Omg" className="text-gray-400 hover:text-white transition-colors">
                 📘 Facebook
               </a>
-              <a href="https://instagram.com/YOUR_HANDLE" className="text-gray-400 hover:text-white transition-colors">
+              <a href="https://www.instagram.com/divabyfay/" className="text-gray-400 hover:text-white transition-colors">
                 📷 Instagram
               </a>
             </div>
@@ -41,7 +41,7 @@ export const Footer = () => {
             <h4 className="text-lg font-bold mb-6">Contact Us</h4>
             <ul className="space-y-3">
               <li className="text-gray-300">
-                📞 <a href="https://wa.me/27734247729" className="hover:text-white transition-colors">073 424 7729</a>
+                📞 <a href="https://wa.me/27679820321" className="hover:text-white transition-colors">067 982 0321</a>
               </li>
               <li className="text-gray-300">
                 🌐 <a href="http://Divabyfay.com" className="hover:text-white transition-colors">Divabyfay.com</a>

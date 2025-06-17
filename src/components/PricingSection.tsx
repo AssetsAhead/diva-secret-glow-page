@@ -4,6 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Check, Star } from "lucide-react";
 
 export const PricingSection = () => {
+  const handleOrderClick = (packageName: string) => {
+    // Replace with your actual PayFast payment URLs for each package
+    console.log(`Ordering ${packageName} package`);
+    window.open("YOUR_PAYFAST_PAYMENT_URL", "_blank");
+  };
+
   const packages = [
     {
       name: "Starter",
@@ -139,6 +145,7 @@ export const PricingSection = () => {
                 </ul>
 
                 <Button 
+                  onClick={() => handleOrderClick(pkg.name)}
                   className={`w-full font-bold py-3 transition-all duration-300 ${
                     pkg.popular 
                       ? 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black shadow-lg hover:shadow-xl' 
