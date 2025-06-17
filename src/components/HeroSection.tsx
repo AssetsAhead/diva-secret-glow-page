@@ -11,7 +11,7 @@ export const HeroSection = () => {
         {/* Diva Logo - Stretched */}
         <div className="flex justify-center mb-8">
           <img 
-            src="/lovable-uploads/31d847f2-6d21-4c6b-bf8f-34eabd0a5cc7.png" 
+            src="/lovable-uploads/969859d4-026e-4541-9759-d8df0b375b3a.png" 
             alt="Diva Secret International" 
             className="w-full max-w-md md:max-w-lg lg:max-w-xl h-24 md:h-32 lg:h-40 object-contain drop-shadow-2xl"
           />
@@ -24,7 +24,7 @@ export const HeroSection = () => {
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="h-5 w-5 fill-current" />
               ))}
-              <span className="text-sm font-medium">Trusted by thousands</span>
+              <span className="text-sm font-medium">Trusted by millions worldwide</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
@@ -72,8 +72,8 @@ export const HeroSection = () => {
           <div className="relative">
             <div className="relative w-full max-w-md mx-auto">
               <img 
-                src="/lovable-uploads/7cfeef5a-3fc6-4c21-97cd-b78326973647.png"
-                alt="Happy healthy people"
+                src="/lovable-uploads/cd38486d-ec02-4791-8619-6b8d57e5857b.png"
+                alt="Diva Secret Stem Cells - Elevate wellness, immune booster, energy booster"
                 className="rounded-2xl shadow-2xl w-full h-auto object-cover"
               />
               <div className="absolute -top-4 -right-4 bg-yellow-400 text-purple-900 rounded-full p-4 font-bold text-lg shadow-lg">
