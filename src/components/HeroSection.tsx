@@ -7,6 +7,16 @@ export const HeroSection = () => {
     <section className="relative min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-teal-600 text-white overflow-hidden">
       <div className="absolute inset-0 bg-black opacity-40"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+        
+        {/* Diva Logo */}
+        <div className="flex justify-center mb-8">
+          <img 
+            src="/lovable-uploads/31d847f2-6d21-4c6b-bf8f-34eabd0a5cc7.png" 
+            alt="Diva Secret International" 
+            className="h-20 w-auto md:h-24 lg:h-28 drop-shadow-2xl"
+          />
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
           
           <div className="space-y-8 text-center lg:text-left">
