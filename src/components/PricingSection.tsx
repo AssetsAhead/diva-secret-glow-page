@@ -15,12 +15,13 @@ export const PricingSection = () => {
       name: "Starter",
       price: "R700",
       priceWithDelivery: "R820",
-      boxes: "1 Box",
+      boxes: "1 Mini Box",
+      pv: "22.5PV",
       description: "Try before you commit. Ideal for first-timers.",
       icon: "🧪",
       features: [
-        "11 sachets x 3000mg",
-        "Free delivery over R820",
+        "1 Mini Box",
+        "22.5 Point Value",
         "Money-back guarantee",
         "WhatsApp support"
       ],
@@ -31,11 +32,12 @@ export const PricingSection = () => {
       price: "R1300",
       priceWithDelivery: "R1420",
       boxes: "2 Mini Boxes",
+      pv: "45PV",
       description: "Great for couples or shared use.",
       icon: "👥",
       features: [
-        "22 sachets x 3000mg",
-        "Free delivery",
+        "2 Mini Boxes",
+        "45 Point Value",
         "Money-back guarantee",
         "WhatsApp support",
         "Bulk savings"
@@ -45,13 +47,14 @@ export const PricingSection = () => {
     {
       name: "Silver",
       price: "R2400",
-      priceWithDelivery: "R2400",
+      priceWithDelivery: "R2520",
       boxes: "4 Mini Boxes",
+      pv: "90PV",
       description: "Family or chronic care option.",
       icon: "🌿",
       features: [
-        "44 sachets x 3000mg",
-        "Free delivery",
+        "4 Mini Boxes",
+        "90 Point Value",
         "Money-back guarantee",
         "Priority WhatsApp support",
         "Bulk savings",
@@ -62,13 +65,14 @@ export const PricingSection = () => {
     {
       name: "Gold",
       price: "R9600",
-      priceWithDelivery: "R9600",
+      priceWithDelivery: "R9720",
       boxes: "16 Mini Boxes",
+      pv: "360PV",
       description: "For consistent users or wellness enthusiasts.",
       icon: "💼",
       features: [
-        "176 sachets x 3000mg",
-        "Free delivery",
+        "16 Mini Boxes",
+        "360 Point Value",
         "Money-back guarantee",
         "Priority support",
         "Maximum bulk savings",
@@ -79,13 +83,14 @@ export const PricingSection = () => {
     {
       name: "Diamond",
       price: "R24000",
-      priceWithDelivery: "R24000",
+      priceWithDelivery: "R24120",
       boxes: "40 Mini Boxes",
+      pv: "900PV",
       description: "Designed for community impact and business builders.",
       icon: "💎",
       features: [
-        "440 sachets x 3000mg",
-        "Free delivery",
+        "40 Mini Boxes",
+        "900 Point Value",
         "Money-back guarantee",
         "VIP support",
         "Best value per sachet",
@@ -106,8 +111,8 @@ export const PricingSection = () => {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Start your wellness journey with any package. All include our money-back guarantee.
           </p>
-          <div className="bg-yellow-400 text-black px-6 py-3 rounded-full inline-block font-bold text-lg">
-            🚚 FREE DELIVERY on all orders over R820
+          <div className="bg-orange-500 text-white px-6 py-3 rounded-full inline-block font-bold text-lg">
+            📦 Delivery: R120 (added to all orders)
           </div>
         </div>
 

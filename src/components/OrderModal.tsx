@@ -24,9 +24,11 @@ export const OrderModal = ({ children }: OrderModalProps) => {
   const { toast } = useToast();
 
   const packages = [
-    { value: "starter", label: "Starter Package - R299", price: "R299" },
-    { value: "premium", label: "Premium Package - R599", price: "R599" },
-    { value: "ultimate", label: "Ultimate Package - R899", price: "R899" }
+    { value: "starter", label: "Starter - R820 (1 Mini Box, 22.5PV)", price: "R820" },
+    { value: "bronze", label: "Bronze - R1420 (2 Mini Boxes, 45PV)", price: "R1420" },
+    { value: "silver", label: "Silver - R2520 (4 Mini Boxes, 90PV)", price: "R2520" },
+    { value: "gold", label: "Gold - R9720 (16 Mini Boxes, 360PV)", price: "R9720" },
+    { value: "diamond", label: "Diamond - R24120 (40 Mini Boxes, 900PV)", price: "R24120" }
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
