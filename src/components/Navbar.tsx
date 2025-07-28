@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { OrderModal } from "./OrderModal";
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,9 +24,11 @@ export const Navbar = () => {
             <a href="#product" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Product</a>
             <a href="#pricing" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">Pricing</a>
             <a href="#faq" className="text-gray-700 hover:text-purple-600 transition-colors font-medium">FAQ</a>
-            <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6">
-              Order Now
-            </Button>
+            <OrderModal>
+              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6">
+                Order Now
+              </Button>
+            </OrderModal>
           </div>
 
           <div className="md:hidden">
@@ -46,9 +49,11 @@ export const Navbar = () => {
               <a href="#product" className="text-gray-700 hover:text-purple-600 transition-colors">Product</a>
               <a href="#pricing" className="text-gray-700 hover:text-purple-600 transition-colors">Pricing</a>
               <a href="#faq" className="text-gray-700 hover:text-purple-600 transition-colors">FAQ</a>
-              <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white w-full">
-                Order Now
-              </Button>
+              <OrderModal>
+                <Button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white w-full">
+                  Order Now
+                </Button>
+              </OrderModal>
             </div>
           </div>
         )}
