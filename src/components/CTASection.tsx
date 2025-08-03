@@ -22,7 +22,7 @@ export const CTASection = () => {
           </p>
           <div className="text-center">
             <p className="text-yellow-400 text-3xl font-bold mb-2">Starting from only R700</p>
-            <p className="text-gray-300">Free delivery over R820</p>
+            <p className="text-gray-300">Plus R120 delivery fee</p>
           </div>
         </div>
 
@@ -34,8 +34,8 @@ export const CTASection = () => {
           </div>
           <div className="text-center text-white">
             <Truck className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2">Free Delivery</h3>
-            <p className="text-gray-300">Free shipping on orders over R820</p>
+            <h3 className="text-xl font-bold mb-2">Fast Delivery</h3>
+            <p className="text-gray-300">Quick R120 delivery to your door</p>
           </div>
           <div className="text-center text-white">
             <Clock className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
@@ -61,7 +61,7 @@ export const CTASection = () => {
               className="border-2 border-white text-white hover:bg-white hover:text-purple-900 px-12 py-6 text-xl font-bold transition-all duration-300"
               asChild
             >
-              <a href="https://wa.me/27679820321">
+            <a href="https://wa.me/27679820321">
                 💬 Chat on WhatsApp
               </a>
             </Button>
@@ -70,8 +70,7 @@ export const CTASection = () => {
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold text-white mb-4">Special Launch Offer</h3>
             <p className="text-gray-200 text-lg">
-              🎉 Order now and get FREE wellness consultation worth R500 
-              plus priority WhatsApp support for your health journey.
+              🎉 Order now and get priority WhatsApp support for your health journey.
             </p>
           </div>
         </div>

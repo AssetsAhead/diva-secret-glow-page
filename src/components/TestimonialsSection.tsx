@@ -86,7 +86,7 @@ export const TestimonialsSection = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <div className="bg-white text-purple-600 px-6 py-3 rounded-lg font-bold">
-                📞 WhatsApp: 073 424 7729
+                📞 WhatsApp: 067 982 0321
               </div>
               <div className="bg-white text-purple-600 px-6 py-3 rounded-lg font-bold">
                 🌐 Visit: Divabyfay.com

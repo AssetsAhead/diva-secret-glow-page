@@ -49,7 +49,7 @@ export const HeroSection = () => {
             <div className="text-center lg:text-left">
               <p className="text-sm text-gray-300 mb-2">Starting from only</p>
               <p className="text-3xl font-bold text-yellow-400">R700</p>
-              <p className="text-sm text-gray-300">Free delivery over R820</p>
+              <p className="text-sm text-gray-300">Plus R120 delivery fee</p>
             </div>
           </div>
 
