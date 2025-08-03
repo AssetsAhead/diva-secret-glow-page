@@ -47,7 +47,7 @@ export const Footer = () => {
             <h4 className="text-lg font-bold mb-6">Contact Us</h4>
             <ul className="space-y-3">
               <li className="text-gray-300">
-                📞 <a href="https://wa.me/27679820321" className="hover:text-white transition-colors">067 982 0321</a>
+                📞 <a href="https://wa.me/27679820321" className="hover:text-white transition-colors">+27 67 982 0321</a>
               </li>
               <li className="text-gray-300">
                 🌐 <a href="http://Divabyfay.com" className="hover:text-white transition-colors">Divabyfay.com</a>
