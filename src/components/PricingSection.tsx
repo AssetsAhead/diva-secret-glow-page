@@ -176,10 +176,25 @@ export const PricingSection = () => {
             </p>
             <Button 
               variant="outline" 
-              className="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold px-8 py-3"
+              className="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold px-8 py-3 mb-6"
             >
               Learn About Business Opportunity
             </Button>
+            
+            <div className="text-left text-gray-300 space-y-4">
+              <p>
+                I want to take a moment to talk about something important – your wealth and the health of those you love. Diva Secret Stem Cells isn't just a product; it's a lifeline for so many people suffering from pain, aging, and health challenges.
+              </p>
+              <p>
+                But here's the thing: to help others, you need a way to reach them. That's where your personal capture page comes in. It's your gateway to sales, leads, and success. Without it, you're leaving money on the table.
+              </p>
+              <p>
+                A customisable capture page is your #1 tool for generating leads and sales effortlessly. On its own, creating a professional capture page like this would cost you hundreds, if not thousands, of Rands. But here's the kicker: when you join at the Starter Membership for just ZAR 1500, you get it included! Did you know there are businesses out there struggling because they don't have a capture page or website? Don't let that be you. With Diva Secret, you get everything you need to thrive.
+              </p>
+              <p className="text-yellow-400 font-bold">
+                👉 Get Your Capture Page & Start Helping Others Today.
+              </p>
+            </div>
           </div>
         </div>
 
