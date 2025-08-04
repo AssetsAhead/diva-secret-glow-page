@@ -47,10 +47,15 @@ export const ProductShowcase = () => {
 
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
               <h4 className="text-xl font-bold mb-3 text-yellow-400">What's Inside:</h4>
-              <p className="text-gray-200">
+              <p className="text-gray-200 mb-4">
                 11 sachets × 3000mg of premium stem cell activating formula. 
                 Natural fruit flavors make it easy and enjoyable to take daily.
               </p>
+              <img 
+                src="/lovable-uploads/ea48f368-733d-452c-a05b-562a5582ffe8.png"
+                alt="Diva Secret Stem Cells Ingredients"
+                className="w-full rounded-xl"
+              />
             </div>
 
             <Button 
@@ -63,7 +68,37 @@ export const ProductShowcase = () => {
           </div>
         </div>
 
-        <div className="mt-20 text-center">
+        <div className="mt-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <h3 className="text-2xl font-bold text-white mb-6">
+              How <span className="text-yellow-400">Stem Cells Work</span>
+            </h3>
+            <img 
+              src="/lovable-uploads/0861c591-6857-4983-a1ff-17d9738c4dba.png"
+              alt="How stem cells work in the body"
+              className="w-full rounded-2xl shadow-2xl"
+            />
+            <p className="text-lg text-gray-200 mt-4">
+              Diva Secret Stem Cells target and regenerate cells throughout your body for optimal health.
+            </p>
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <h3 className="text-2xl font-bold text-white mb-6">
+              Real Product, Real <span className="text-yellow-400">Results</span>
+            </h3>
+            <img 
+              src="/lovable-uploads/455bcc95-970c-4301-9d15-88f6a7120f79.png"
+              alt="Diva Secret product sachets"
+              className="w-full rounded-2xl shadow-2xl"
+            />
+            <p className="text-lg text-gray-200 mt-4">
+              Each box contains 11 individually sealed sachets for maximum freshness and potency.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-12 text-center">
           <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-white/20">
             <h3 className="text-3xl font-bold text-white mb-6">
               The Power of Choice: <span className="text-yellow-400">You Are What You Eat!</span>

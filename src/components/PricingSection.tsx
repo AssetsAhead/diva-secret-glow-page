@@ -116,6 +116,14 @@ export const PricingSection = () => {
           </div>
         </div>
 
+        <div className="mb-12 text-center">
+          <img 
+            src="/lovable-uploads/d1d3b786-c3c4-4957-ad6d-f30407c8913b.png"
+            alt="Diva Secret Price List"
+            className="w-full max-w-3xl mx-auto rounded-2xl shadow-2xl"
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {packages.map((pkg, index) => (
             <Card key={index} className={`relative hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 bg-white border-0 shadow-xl overflow-hidden ${pkg.popular ? 'ring-4 ring-yellow-400 scale-105' : ''}`}>

@@ -96,6 +96,16 @@ export const BenefitsSection = () => {
           </div>
         </div>
 
+        <div className="mt-16 max-w-4xl mx-auto">
+          <div className="bg-gradient-to-r from-blue-600/20 to-teal-600/20 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+            <img 
+              src="/lovable-uploads/e4711cf3-9ca2-4957-ad6d-f30407c8913b.png"
+              alt="Natural Relief from Kidney Stones with Stem Cells"
+              className="w-full rounded-2xl shadow-2xl"
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   );
