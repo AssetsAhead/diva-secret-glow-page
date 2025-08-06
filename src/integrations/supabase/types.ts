@@ -14,13 +14,191 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      email_campaigns: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          name: string
+          scheduled_at: string | null
+          sent_at: string | null
+          status: string | null
+          subject: string
+          target_audience: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          name: string
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: string | null
+          subject: string
+          target_audience: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          name?: string
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: string | null
+          subject?: string
+          target_audience?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      email_sends: {
+        Row: {
+          campaign_id: string | null
+          clicked_at: string | null
+          id: string
+          lead_id: string | null
+          opened_at: string | null
+          sent_at: string | null
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          campaign_id?: string | null
+          clicked_at?: string | null
+          id?: string
+          lead_id?: string | null
+          opened_at?: string | null
+          sent_at?: string | null
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          campaign_id?: string | null
+          clicked_at?: string | null
+          id?: string
+          lead_id?: string | null
+          opened_at?: string | null
+          sent_at?: string | null
+          unsubscribed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_sends_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "email_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "email_sends_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          lead_type: string
+          metadata: Json | null
+          name: string
+          phone: string | null
+          source: string | null
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          lead_type: string
+          metadata?: Json | null
+          name: string
+          phone?: string | null
+          source?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          lead_type?: string
+          metadata?: Json | null
+          name?: string
+          phone?: string | null
+          source?: string | null
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      orders: {
+        Row: {
+          amount: number | null
+          created_at: string
+          currency: string | null
+          delivery_address: string | null
+          id: string
+          lead_id: string | null
+          metadata: Json | null
+          order_number: string | null
+          package_type: string
+          status: string | null
+          updated_at: string
+          whatsapp_message: string | null
+        }
+        Insert: {
+          amount?: number | null
+          created_at?: string
+          currency?: string | null
+          delivery_address?: string | null
+          id?: string
+          lead_id?: string | null
+          metadata?: Json | null
+          order_number?: string | null
+          package_type: string
+          status?: string | null
+          updated_at?: string
+          whatsapp_message?: string | null
+        }
+        Update: {
+          amount?: number | null
+          created_at?: string
+          currency?: string | null
+          delivery_address?: string | null
+          id?: string
+          lead_id?: string | null
+          metadata?: Json | null
+          order_number?: string | null
+          package_type?: string
+          status?: string | null
+          updated_at?: string
+          whatsapp_message?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_order_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
