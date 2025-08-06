@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 export const HeroSection = () => {
-  return <section className="relative min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-teal-600 text-white overflow-hidden">
-      <div className="absolute inset-0 bg-black opacity-40"></div>
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+  return <section className="relative min-h-screen bg-gradient-to-br from-green-500 via-orange-500 to-red-500 text-white overflow-hidden">
+      <div className="absolute inset-0 bg-black opacity-30"></div>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
         
-        {/* Diva Logo - Stretched */}
-        <div className="flex justify-center mb-8 rounded-full">
-          <img src="/lovable-uploads/969859d4-026e-4541-9759-d8df0b375b3a.png" alt="Diva Secret International" className="w-full max-w-md md:max-w-lg lg:max-w-xl h-24 md:h-32 lg:h-40 object-contain drop-shadow-2xl" />
+        {/* Diva Logo - Much Larger */}
+        <div className="flex justify-center mb-12 rounded-full">
+          <img src="/lovable-uploads/969859d4-026e-4541-9759-d8df0b375b3a.png" alt="Diva Secret International" className="w-full max-w-2xl md:max-w-4xl lg:max-w-5xl h-32 md:h-48 lg:h-64 object-contain drop-shadow-2xl" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
@@ -19,13 +19,13 @@ export const HeroSection = () => {
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              <span className="bg-gradient-to-r from-yellow-400 to-pink-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent">
                 Restore
               </span>
               <br />
               <span className="text-white">Your Health</span>
               <br />
-              <span className="bg-gradient-to-r from-teal-400 to-blue-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">
                 Naturally
               </span>
             </h1>
@@ -36,27 +36,27 @@ export const HeroSection = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="bg-gradient-to-r from-pink-500 to-red-500 hover:from-pink-600 hover:to-red-600 text-white px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+              <Button size="lg" className="bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                 Order with PayFast
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               
-              <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-purple-900 px-8 py-4 text-lg font-semibold transition-all duration-300">
+              <Button variant="outline" size="lg" className="border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-300">
                 See How It Works
               </Button>
             </div>
             
             <div className="text-center lg:text-left">
-              <p className="text-sm text-gray-300 mb-2">Starting from only</p>
-              <p className="text-3xl font-bold text-yellow-400">R700</p>
-              <p className="text-sm text-gray-300">Plus R120 delivery fee</p>
+              <p className="text-sm text-gray-200 mb-2">Starting from only</p>
+              <p className="text-3xl font-bold text-orange-400">R700</p>
+              <p className="text-sm text-gray-200">Plus R120 delivery fee</p>
             </div>
           </div>
 
           <div className="relative">
             <div className="relative w-full max-w-md mx-auto">
               <img src="/lovable-uploads/cd38486d-ec02-4791-8619-6b8d57e5857b.png" alt="Diva Secret Stem Cells - Elevate wellness, immune booster, energy booster" className="rounded-2xl shadow-2xl w-full h-auto object-cover" />
-              <div className="absolute -top-4 -right-4 bg-yellow-400 text-purple-900 rounded-full p-4 font-bold text-lg shadow-lg">
+              <div className="absolute -top-4 -right-4 bg-gradient-to-r from-green-400 to-lime-400 text-black rounded-full p-4 font-bold text-lg shadow-lg">
                 ✨ New!
               </div>
             </div>

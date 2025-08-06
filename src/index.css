@@ -15,17 +15,17 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 120 100% 25%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 30 100% 50%;
+    --secondary-foreground: 0 0% 0%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 100% 50%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -36,20 +36,27 @@
 
     --radius: 0.5rem;
 
+    /* Custom vibrant color palette */
+    --bright-green: 120 100% 40%;
+    --bright-red: 0 100% 50%;
+    --bright-orange: 30 100% 50%;
+    --electric-lime: 75 100% 50%;
+    --coral-red: 16 100% 55%;
+    --sunset-orange: 24 100% 50%;
+
+    /* Gradients with bright colors */
+    --gradient-vibrant: linear-gradient(135deg, hsl(var(--bright-green)), hsl(var(--bright-orange)));
+    --gradient-energy: linear-gradient(135deg, hsl(var(--bright-red)), hsl(var(--bright-orange)));
+    --gradient-tropical: linear-gradient(135deg, hsl(var(--electric-lime)), hsl(var(--bright-green)));
+    --gradient-sunset: linear-gradient(135deg, hsl(var(--coral-red)), hsl(var(--sunset-orange)));
+
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
