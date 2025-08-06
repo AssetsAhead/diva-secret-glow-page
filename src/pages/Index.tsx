@@ -3,6 +3,7 @@ import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { BenefitsSection } from "@/components/BenefitsSection";
 import { ProductShowcase } from "@/components/ProductShowcase";
+import { StemCellEducation } from "@/components/StemCellEducation";
 import { VideoSection } from "@/components/VideoSection";
 import { PricingSection } from "@/components/PricingSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
@@ -18,6 +19,7 @@ const Index = () => {
       <HeroSection />
       <BenefitsSection />
       <ProductShowcase />
+      <StemCellEducation />
       <VideoSection />
       <PricingSection />
       <TestimonialsSection />
