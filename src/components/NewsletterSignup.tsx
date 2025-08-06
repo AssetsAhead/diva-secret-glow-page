@@ -1,4 +1,4 @@
-import { useState } from "react";
+import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,9 +7,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Mail, Gift, Bell, Star } from "lucide-react";
 
 export const NewsletterSignup = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = React.useState("");
+  const [name, setName] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
