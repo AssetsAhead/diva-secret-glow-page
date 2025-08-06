@@ -2,6 +2,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Star } from "lucide-react";
+import { OrderModal } from "./OrderModal";
+import { OpportunitySignup } from "./OpportunitySignup";
 
 export const PricingSection = () => {
   const handleOrderClick = (packageName: string) => {
@@ -157,16 +159,15 @@ export const PricingSection = () => {
                   ))}
                 </ul>
 
-                <Button 
-                  onClick={() => handleOrderClick(pkg.name)}
-                  className={`w-full font-bold py-3 transition-all duration-300 ${
+                <OrderModal>
+                  <Button className={`w-full font-bold py-3 transition-all duration-300 ${
                     pkg.popular 
                       ? 'bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black shadow-lg hover:shadow-xl' 
                       : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white'
-                  }`}
-                >
-                  Order with PayFast
-                </Button>
+                  }`}>
+                    Order Now
+                  </Button>
+                </OrderModal>
                 
               </CardContent>
             </Card>
@@ -182,12 +183,14 @@ export const PricingSection = () => {
               Join our wellness community and discover how sharing Diva Secret can create 
               additional income while helping others achieve better health.
             </p>
-            <Button 
-              variant="outline" 
-              className="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold px-8 py-3 mb-6"
-            >
-              Learn About Business Opportunity
-            </Button>
+            <OpportunitySignup>
+              <Button 
+                variant="outline" 
+                className="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold px-8 py-3 mb-6"
+              >
+                Learn About Business Opportunity
+              </Button>
+            </OpportunitySignup>
             
             <div className="text-left text-gray-300 space-y-4">
               <p>

@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface OrderModalProps {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ interface OrderModalProps {
 
 export const OrderModal = ({ children }: OrderModalProps) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -31,7 +33,7 @@ export const OrderModal = ({ children }: OrderModalProps) => {
     { value: "diamond", label: "Diamond - R24120 (40 Mini Boxes, 900PV)", price: "R24120" }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     // Basic validation
@@ -44,9 +46,47 @@ export const OrderModal = ({ children }: OrderModalProps) => {
       return;
     }
 
-    // Create WhatsApp message
-    const selectedPackage = packages.find(p => p.value === formData.package);
-    const message = `Hi! I'd like to order:
+    setIsLoading(true);
+
+    try {
+      const selectedPackage = packages.find(p => p.value === formData.package);
+      
+      // Save lead and order to database
+      const { data: leadData, error: leadError } = await supabase
+        .from('leads')
+        .insert({
+          name: formData.name,
+          email: formData.email || null,
+          phone: formData.phone,
+          lead_type: 'customer',
+          metadata: {
+            package: formData.package,
+            source: 'order_modal'
+          }
+        })
+        .select()
+        .single();
+
+      if (leadError) throw leadError;
+
+      // Create order record
+      const { error: orderError } = await supabase
+        .from('orders')
+        .insert({
+          lead_id: leadData.id,
+          package_type: formData.package,
+          amount: parseFloat(selectedPackage?.price.replace('R', '') || '0'),
+          delivery_address: formData.address,
+          whatsapp_message: formData.message,
+          metadata: {
+            package_label: selectedPackage?.label
+          }
+        });
+
+      if (orderError) throw orderError;
+
+      // Create WhatsApp message
+      const message = `Hi! I'd like to order:
 
 *Package:* ${selectedPackage?.label}
 *Name:* ${formData.name}
@@ -58,16 +98,26 @@ ${formData.message ? `*Additional Message:* ${formData.message}` : ''}
 
 Please confirm my order and payment details.`;
 
-    const whatsappUrl = `https://wa.me/27679820321?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    
-    setOpen(false);
-    setFormData({ name: "", phone: "", email: "", address: "", package: "", message: "" });
-    
-    toast({
-      title: "Order Initiated",
-      description: "You'll be redirected to WhatsApp to complete your order"
-    });
+      const whatsappUrl = `https://wa.me/27679820321?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      
+      setOpen(false);
+      setFormData({ name: "", phone: "", email: "", address: "", package: "", message: "" });
+      
+      toast({
+        title: "Order Submitted!",
+        description: "Your order has been saved and you'll be contacted soon"
+      });
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      toast({
+        title: "Order Failed",
+        description: "Please try again or contact us directly",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -171,14 +221,16 @@ Please confirm my order and payment details.`;
               variant="outline" 
               onClick={() => setOpen(false)}
               className="flex-1"
+              disabled={isLoading}
             >
               Cancel
             </Button>
             <Button 
               type="submit"
               className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+              disabled={isLoading}
             >
-              Order via WhatsApp
+              {isLoading ? "Submitting..." : "Order via WhatsApp"}
             </Button>
           </div>
         </form>
