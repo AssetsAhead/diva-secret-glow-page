@@ -4,10 +4,9 @@ import { ShoppingCart, MessageCircle, Instagram } from "lucide-react";
 
 export const PersistentFooter = () => {
   const handleBuyNow = () => {
-    // This will need to be connected to your PayFast payment gateway
-    console.log("Buy Now clicked - integrate with PayFast");
-    // You'll need to add your PayFast payment URL here
-    window.open("YOUR_PAYFAST_PAYMENT_URL", "_blank");
+    // Redirect to WhatsApp for orders instead of PayFast for now
+    console.log("Buy Now clicked - redirecting to WhatsApp");
+    window.open("https://wa.me/27679820321?text=Hi!%20I%20want%20to%20order%20Diva%20Secret%20Stem%20Cells", "_blank");
   };
 
   return (

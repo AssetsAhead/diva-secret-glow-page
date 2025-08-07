@@ -4,9 +4,9 @@ import { ArrowRight, Shield, Truck, Clock } from "lucide-react";
 
 export const CTASection = () => {
   const handlePayFastOrder = () => {
-    // Replace with your actual PayFast payment URL
-    console.log("PayFast order initiated");
-    window.open("YOUR_PAYFAST_PAYMENT_URL", "_blank");
+    // Redirect to WhatsApp for orders instead of PayFast for now
+    console.log("PayFast order initiated - redirecting to WhatsApp");
+    window.open("https://wa.me/27679820321?text=Hi!%20I%20want%20to%20order%20Diva%20Secret%20Stem%20Cells", "_blank");
   };
 
   return (

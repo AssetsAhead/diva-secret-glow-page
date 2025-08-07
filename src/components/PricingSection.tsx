@@ -7,9 +7,9 @@ import { OpportunitySignup } from "./OpportunitySignup";
 
 export const PricingSection = () => {
   const handleOrderClick = (packageName: string) => {
-    // Replace with your actual PayFast payment URLs for each package
-    console.log(`Ordering ${packageName} package`);
-    window.open("YOUR_PAYFAST_PAYMENT_URL", "_blank");
+    // Redirect to WhatsApp for orders instead of PayFast for now
+    console.log(`Ordering ${packageName} package - redirecting to WhatsApp`);
+    window.open(`https://wa.me/27679820321?text=Hi!%20I%20want%20to%20order%20the%20${packageName}%20package`, "_blank");
   };
 
   const packages = [
