@@ -25,9 +25,10 @@ export const PricingSection = () => {
         "1 Mini Box",
         "22.5 Point Value",
         "Money-back guarantee",
-        "WhatsApp support"
+        "Secure online payment"
       ],
-      popular: false
+      popular: false,
+      amount: 820
     },
     {
       name: "Bronze",
@@ -41,10 +42,11 @@ export const PricingSection = () => {
         "2 Mini Boxes",
         "45 Point Value",
         "Money-back guarantee",
-        "WhatsApp support",
+        "Secure online payment",
         "Bulk savings"
       ],
-      popular: false
+      popular: false,
+      amount: 1420
     },
     {
       name: "Silver",
@@ -58,11 +60,12 @@ export const PricingSection = () => {
         "4 Mini Boxes",
         "90 Point Value",
         "Money-back guarantee",
-        "Priority WhatsApp support",
+        "Secure online payment",
         "Bulk savings",
         "Family wellness plan"
       ],
-      popular: true
+      popular: true,
+      amount: 2520
     },
     {
       name: "Gold",
@@ -76,29 +79,31 @@ export const PricingSection = () => {
         "16 Mini Boxes",
         "360 Point Value",
         "Money-back guarantee",
-        "Priority support",
+        "Secure online payment",
         "Maximum bulk savings",
         "Wellness consultation"
       ],
-      popular: false
+      popular: false,
+      amount: 9720
     },
     {
       name: "Diamond",
       price: "R24000",
       priceWithDelivery: "R24120",
-      boxes: "40 Mini Boxes",
+      boxes: "24 Mini Boxes",
       pv: "900PV",
       description: "Designed for community impact and business builders.",
       icon: "💎",
       features: [
-        "40 Mini Boxes",
+        "24 Mini Boxes",
         "900 Point Value",
         "Money-back guarantee",
-        "VIP support",
+        "Secure online payment",
         "Best value per sachet",
         "Business opportunity info"
       ],
-      popular: false
+      popular: false,
+      amount: 24120
     }
   ];
 

@@ -4,9 +4,11 @@ import { ShoppingCart, MessageCircle, Instagram } from "lucide-react";
 
 export const PersistentFooter = () => {
   const handleBuyNow = () => {
-    // Redirect to WhatsApp for orders instead of PayFast for now
-    console.log("Buy Now clicked - redirecting to WhatsApp");
-    window.open("https://wa.me/27679820321?text=Hi!%20I%20want%20to%20order%20Diva%20Secret%20Stem%20Cells", "_blank");
+    // Scroll to pricing section for package selection
+    const pricingSection = document.getElementById('pricing');
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
