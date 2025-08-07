@@ -40,10 +40,6 @@ export const HeroSection = () => {
                 Order with PayFast
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              
-              <Button variant="outline" size="lg" className="border-2 border-orange-400 text-orange-400 hover:bg-orange-400 hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-300">
-                See How It Works
-              </Button>
             </div>
             
             <div className="text-center lg:text-left">
