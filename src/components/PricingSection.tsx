@@ -118,9 +118,11 @@ export const PricingSection = () => {
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Start your wellness journey with any package. All include our money-back guarantee.
           </p>
-          <div className="bg-orange-500 text-white px-6 py-3 rounded-full inline-block font-bold text-lg">
-            📦 Delivery: R120 (added to all orders)
-          </div>
+          <OrderModal>
+            <div className="bg-orange-500 text-white px-6 py-3 rounded-full inline-block font-bold text-lg cursor-pointer hover:bg-orange-600 transition-colors duration-300 hover:scale-105 transform">
+              📦 Delivery: R120 (added to all orders)
+            </div>
+          </OrderModal>
         </div>
 
         <div className="mb-12 text-center">
