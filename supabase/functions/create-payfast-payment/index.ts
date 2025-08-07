@@ -100,6 +100,51 @@ serve(async (req) => {
 
     if (orderError) throw orderError;
 
+    // Send WhatsApp notification for new order
+    try {
+      const twilioAccountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
+      const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
+      const twilioWhatsAppFrom = Deno.env.get("TWILIO_WHATSAPP_FROM");
+
+      if (twilioAccountSid && twilioAuthToken && twilioWhatsAppFrom) {
+        const whatsappMessage = `🎉 NEW ORDER ALERT!
+
+📦 Order: ${order_id}
+👤 Customer: ${customer_name}
+📧 Email: ${customer_email}
+📱 Phone: ${customer_phone}
+💰 Package: ${package_type.toUpperCase()} - R${amount}
+📍 Address: ${delivery_address || 'Not provided'}
+💬 Message: ${message || 'None'}
+
+Order is pending PayFast payment completion.`;
+
+        const twilioResponse = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Basic ' + btoa(twilioAccountSid + ':' + twilioAuthToken),
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            'From': twilioWhatsAppFrom,
+            'To': 'whatsapp:+27679820321', // Your WhatsApp number
+            'Body': whatsappMessage
+          }).toString()
+        });
+
+        if (!twilioResponse.ok) {
+          console.error('Failed to send WhatsApp notification:', await twilioResponse.text());
+        } else {
+          console.log('WhatsApp notification sent successfully');
+        }
+      } else {
+        console.log('Twilio credentials not configured, skipping WhatsApp notification');
+      }
+    } catch (whatsappError) {
+      console.error('Error sending WhatsApp notification:', whatsappError);
+      // Don't fail the order creation if WhatsApp fails
+    }
+
     // Generate PayFast signature
     const generateSignature = (data: Record<string, string>, passPhrase = "") => {
       const pfOutput = Object.keys(data)
