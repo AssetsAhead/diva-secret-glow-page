@@ -1,15 +1,9 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Truck, Clock } from "lucide-react";
+import { OrderModal } from "./OrderModal";
 
 export const CTASection = () => {
-  const handlePayFastOrder = () => {
-    // Scroll to pricing section for package selection
-    const pricingSection = document.getElementById('pricing');
-    if (pricingSection) {
-      pricingSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section className="py-20 bg-gradient-to-br from-purple-900 via-pink-900 to-red-900">
@@ -48,14 +42,15 @@ export const CTASection = () => {
 
         <div className="text-center space-y-8">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              onClick={handlePayFastOrder}
-              size="lg" 
-              className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-12 py-6 text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
-            >
-              Order with PayFast Now
-              <ArrowRight className="ml-3 h-6 w-6" />
-            </Button>
+            <OrderModal>
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black px-12 py-6 text-xl font-bold shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105"
+              >
+                Order with PayFast Now
+                <ArrowRight className="ml-3 h-6 w-6" />
+              </Button>
+            </OrderModal>
             
             <Button 
               variant="outline" 
