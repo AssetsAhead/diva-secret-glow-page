@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Star } from "lucide-react";
 import { OrderModal } from "./OrderModal";
-import { OpportunitySignup } from "./OpportunitySignup";
+import { DFYOnboardingModal } from "./DFYOnboardingModal";
 
 export const PricingSection = () => {
   const handleOrderClick = (packageName: string) => {
@@ -190,14 +190,14 @@ export const PricingSection = () => {
               Join our wellness community and discover how sharing Diva Secret can create 
               additional income while helping others achieve better health.
             </p>
-            <OpportunitySignup>
+            <DFYOnboardingModal>
               <Button 
                 variant="outline" 
                 className="border-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black font-bold px-8 py-3 mb-6"
               >
-                Learn About Business Opportunity
+                Get Done-For-You Agency Setup
               </Button>
-            </OpportunitySignup>
+            </DFYOnboardingModal>
             
             <div className="text-left text-gray-300 space-y-4">
               <p>

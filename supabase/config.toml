@@ -1,1 +1,4 @@
 project_id = "uyhzhlgoiveljgdsyugn"
+
+[functions.dfy-provision]
+verify_jwt = false
