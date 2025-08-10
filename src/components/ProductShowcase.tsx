@@ -1,6 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { OrderModal } from "./OrderModal";
+import blueberriesImg from "@/assets/fruit-blueberries.jpg";
+import citrusImg from "@/assets/fruit-citrus.jpg";
+import kaleImg from "@/assets/greens-kale.jpg";
+import aloeImg from "@/assets/plant-aloe.jpg";
 
 export const ProductShowcase = () => {
   return (
@@ -61,20 +64,20 @@ export const ProductShowcase = () => {
               />
               <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🫐</div>
+                  <img src={blueberriesImg} alt="Blueberries rich in antioxidants" className="rounded-xl w-full h-24 object-cover" loading="lazy" decoding="async" />
                   <p className="text-xs text-gray-200 mt-2">Blueberries</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🍊</div>
+                  <img src={citrusImg} alt="Citrus providing natural vitamin C" className="rounded-xl w-full h-24 object-cover" loading="lazy" decoding="async" />
                   <p className="text-xs text-gray-200 mt-2">Citrus</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🍇</div>
-                  <p className="text-xs text-gray-200 mt-2">Grapes</p>
+                  <img src={kaleImg} alt="Leafy greens packed with phytonutrients" className="rounded-xl w-full h-24 object-cover" loading="lazy" decoding="async" />
+                  <p className="text-xs text-gray-200 mt-2">Leafy Greens</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🌿</div>
-                  <p className="text-xs text-gray-200 mt-2">Botanicals</p>
+                  <img src={aloeImg} alt="Aloe vera soothing botanical" className="rounded-xl w-full h-24 object-cover" loading="lazy" decoding="async" />
+                  <p className="text-xs text-gray-200 mt-2">Aloe</p>
                 </div>
               </div>
             </div>
