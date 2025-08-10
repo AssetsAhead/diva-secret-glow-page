@@ -1,9 +1,10 @@
 
 import { Button } from "@/components/ui/button";
+import { OrderModal } from "./OrderModal";
 
 export const ProductShowcase = () => {
   return (
-    <section id="product" className="py-20 bg-gradient-to-br from-purple-900 via-blue-900 to-teal-600">
+    <section id="product" className="py-20 bg-gradient-to-br from-emerald-950 via-green-900 to-teal-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -55,15 +56,37 @@ export const ProductShowcase = () => {
                 src="/lovable-uploads/ea48f368-733d-452c-a05b-562a5582ffe8.png"
                 alt="Diva Secret Stem Cells Ingredients"
                 className="w-full rounded-xl"
+                loading="lazy"
+                decoding="async"
               />
+              <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="text-center">
+                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🫐</div>
+                  <p className="text-xs text-gray-200 mt-2">Blueberries</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🍊</div>
+                  <p className="text-xs text-gray-200 mt-2">Citrus</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🍇</div>
+                  <p className="text-xs text-gray-200 mt-2">Grapes</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-full h-24 rounded-xl bg-white/10 flex items-center justify-center text-3xl">🌿</div>
+                  <p className="text-xs text-gray-200 mt-2">Botanicals</p>
+                </div>
+              </div>
             </div>
 
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
-            >
-              Order Your Box Today
-            </Button>
+            <OrderModal>
+              <Button 
+                size="lg" 
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              >
+                Order Your Box Today
+              </Button>
+            </OrderModal>
             
           </div>
         </div>
