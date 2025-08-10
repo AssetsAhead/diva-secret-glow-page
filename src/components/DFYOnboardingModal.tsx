@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -167,7 +168,7 @@ export const DFYOnboardingModal = ({ children }: DFYOnboardingModalProps) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="calUrl">Calendar booking link (Cal.com / Calendly)</Label>
+              <Label htmlFor="calUrl">Calendar link (optional)</Label>
               <Input
                 id="calUrl"
                 value={formData.calUrl}
@@ -175,27 +176,36 @@ export const DFYOnboardingModal = ({ children }: DFYOnboardingModalProps) => {
                 placeholder="https://cal.com/yourname/intro-call"
               />
             </div>
-            <div>
-              <Label htmlFor="webhookUrl">Automation webhook (Zapier / Pipedream)</Label>
-              <Input
-                id="webhookUrl"
-                value={formData.webhookUrl}
-                onChange={(e) => setFormData({ ...formData, webhookUrl: e.target.value })}
-                placeholder="https://eoxs7w6k...m.pipedream.net"
-              />
-            </div>
+            <div className="hidden md:block" />
           </div>
 
-          <div>
-            <Label htmlFor="notes">Anything else we should know?</Label>
-            <Textarea
-              id="notes"
-              rows={4}
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              placeholder="Preferred hours, offer details, special requests, etc."
-            />
-          </div>
+          <Collapsible>
+            <CollapsibleTrigger className="text-sm text-primary underline-offset-4 hover:underline">
+              Advanced options (optional)
+            </CollapsibleTrigger>
+            <CollapsibleContent className="space-y-4 mt-2">
+              <div>
+                <Label htmlFor="webhookUrl">Automation link (optional)</Label>
+                <Input
+                  id="webhookUrl"
+                  value={formData.webhookUrl}
+                  onChange={(e) => setFormData({ ...formData, webhookUrl: e.target.value })}
+                  placeholder="https://hooks.zapier.com/..."
+                />
+                <p className="text-xs text-muted-foreground mt-1">Advanced: Zapier/Pipedream URL. Skip if unsure.</p>
+              </div>
+              <div>
+                <Label htmlFor="notes">Notes (optional)</Label>
+                <Textarea
+                  id="notes"
+                  rows={4}
+                  value={formData.notes}
+                  onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                  placeholder="Anything else we should know? Preferences, special requests, etc."
+                />
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
           <div className="flex gap-3 pt-2">
             <Button type="button" variant="outline" className="flex-1" onClick={() => setOpen(false)} disabled={isLoading}>

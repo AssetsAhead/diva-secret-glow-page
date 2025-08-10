@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
+import { OrderModal } from "./OrderModal";
+import heroBg from "@/assets/hero-forest.jpg";
 export const HeroSection = () => {
-  return <section className="relative min-h-screen bg-gradient-to-br from-green-500 via-orange-500 to-red-500 text-white overflow-hidden">
+  return <section className="relative min-h-screen text-white overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${heroBg})` }}>
       <div className="absolute inset-0 bg-black opacity-30"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
         
@@ -35,12 +37,12 @@ export const HeroSection = () => {
               restores, rejuvenates and reactivates your body's healing power.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button size="lg" className="bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
-                Order with PayFast
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </div>
+              <OrderModal>
+                <Button size="lg" className="bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
+                  Order with PayFast
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </OrderModal>
             
             <div className="text-center lg:text-left">
               <p className="text-sm text-gray-200 mb-2">Starting from only</p>
@@ -51,7 +53,7 @@ export const HeroSection = () => {
 
           <div className="relative">
             <div className="relative w-full max-w-md mx-auto">
-              <img src="/lovable-uploads/cd38486d-ec02-4791-8619-6b8d57e5857b.png" alt="Diva Secret Stem Cells - Elevate wellness, immune booster, energy booster" className="rounded-2xl shadow-2xl w-full h-auto object-cover" />
+              <img src="/lovable-uploads/cd38486d-ec02-4791-8619-6b8d57e5857b.png" alt="Diva Secret Stem Cells - Elevate wellness, immune booster, energy booster" loading="lazy" decoding="async" className="rounded-2xl shadow-2xl w-full h-auto object-cover" />
               <div className="absolute -top-4 -right-4 bg-gradient-to-r from-green-400 to-lime-400 text-black rounded-full p-4 font-bold text-lg shadow-lg">
                 ✨ New!
               </div>
