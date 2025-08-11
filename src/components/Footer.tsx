@@ -7,7 +7,7 @@ export const Footer = () => {
   const [showDisclaimer, setShowDisclaimer] = useState(false);
 
   return (
-    <footer className="bg-emerald-950 text-white py-12">
+    <footer className="bg-flora-strong text-white py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">

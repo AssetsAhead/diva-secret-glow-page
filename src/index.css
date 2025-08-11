@@ -108,3 +108,30 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /* Flora backgrounds: gently overlay the brand background color over a forest image */
+  .bg-flora-soft {
+    background-image:
+      linear-gradient(135deg, hsl(var(--background) / 0.92), hsl(var(--background) / 0.92)),
+      url('/src/assets/hero-forest.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .bg-flora {
+    background-image:
+      linear-gradient(135deg, hsl(var(--background) / 0.7), hsl(var(--background) / 0.7)),
+      url('/src/assets/hero-forest.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .bg-flora-strong {
+    background-image:
+      linear-gradient(135deg, hsl(var(--background) / 0.5), hsl(var(--background) / 0.5)),
+      url('/src/assets/hero-forest.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+}
