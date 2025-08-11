@@ -4,7 +4,7 @@ import { OrderModal } from "./OrderModal";
 import heroBg from "@/assets/bg-plants.jpg";
 export const HeroSection = () => {
   return <section className="relative min-h-screen text-white overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${heroBg})` }}>
-      <div className="absolute inset-0 bg-black opacity-30"></div>
+      <div className="absolute inset-0 bg-black opacity-60"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
         
         {/* Diva Logo - Much Larger */}

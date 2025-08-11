@@ -58,6 +58,9 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Overlay tokens */
+    --overlay-dark: 0 0% 0%;
   }
 
   .dark {
@@ -121,7 +124,7 @@
 
   .bg-flora {
     background-image:
-      linear-gradient(135deg, hsl(var(--background) / 0.7), hsl(var(--background) / 0.7)),
+      linear-gradient(135deg, hsl(var(--overlay-dark) / 0.5), hsl(var(--overlay-dark) / 0.5)),
       url('/src/assets/bg-plants.jpg');
     background-size: cover;
     background-position: center;
@@ -129,7 +132,7 @@
 
   .bg-flora-strong {
     background-image:
-      linear-gradient(135deg, hsl(var(--background) / 0.5), hsl(var(--background) / 0.5)),
+      linear-gradient(135deg, hsl(var(--overlay-dark) / 0.65), hsl(var(--overlay-dark) / 0.65)),
       url('/src/assets/bg-plants.jpg');
     background-size: cover;
     background-position: center;
