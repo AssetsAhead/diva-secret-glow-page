@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Star } from "lucide-react";
 import { OrderModal } from "./OrderModal";
-import heroBg from "@/assets/hero-forest.jpg";
+import heroBg from "@/assets/bg-plants.jpg";
 export const HeroSection = () => {
   return <section className="relative min-h-screen text-white overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${heroBg})` }}>
       <div className="absolute inset-0 bg-black opacity-30"></div>
