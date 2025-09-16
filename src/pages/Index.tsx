@@ -12,10 +12,15 @@ import { CTASection } from "@/components/CTASection";
 import { NewsletterSignup } from "@/components/NewsletterSignup";
 import { Footer } from "@/components/Footer";
 import { PersistentFooter } from "@/components/PersistentFooter";
+import { UrgencyBanner } from "@/components/UrgencyBanner";
+import { SocialProof } from "@/components/SocialProof";
+import { GuaranteeBadge } from "@/components/GuaranteeBadge";
+import { ExitIntentModal } from "@/components/ExitIntentModal";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-white">
+      <UrgencyBanner />
       <Navbar />
       <HeroSection />
       <BenefitsSection />
@@ -29,6 +34,9 @@ const Index = () => {
       <NewsletterSignup />
       <Footer />
       <PersistentFooter />
+      <SocialProof />
+      <GuaranteeBadge />
+      <ExitIntentModal />
     </div>
   );
 };
