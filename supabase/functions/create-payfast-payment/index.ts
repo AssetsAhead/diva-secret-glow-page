@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
-
+import { Md5 } from "https://deno.land/std@0.190.0/hash/md5.ts";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -57,11 +57,13 @@ serve(async (req) => {
     const order_id = `DSC-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
     // PayFast configuration
-    const merchant_id = "29838411";
+    const merchant_id = Deno.env.get("PAYFAST_MERCHANT_ID");
     const merchant_key = Deno.env.get("PAYFAST_MERCHANT_KEY");
-    
-    if (!merchant_key) {
-      throw new Error("PayFast merchant key not configured");
+    const passphrase = Deno.env.get("PAYFAST_PASSPHRASE") || "";
+    const payfastMode = (Deno.env.get("PAYFAST_MODE") || "live").toLowerCase();
+
+    if (!merchant_id || !merchant_key) {
+      throw new Error("PayFast merchant credentials not configured");
     }
 
     // PayFast payment data
@@ -145,18 +147,18 @@ Order is pending PayFast payment completion.`;
       // Don't fail the order creation if WhatsApp fails
     }
 
-    // Generate PayFast signature
-    const generateSignature = (data: Record<string, string>, passPhrase = "") => {
+    // Generate PayFast signature (MD5 of the parameter string, including passphrase if set)
+    const buildSignatureString = (data: Record<string, string>, passPhrase = "") => {
       const pfOutput = Object.keys(data)
-        .filter(key => data[key] !== "" && data[key] !== undefined)
+        .filter((key) => data[key] !== "" && data[key] !== undefined)
         .sort()
-        .map(key => `${key}=${encodeURIComponent(data[key]).replace(/%20/g, "+")}`)
+        .map((key) => `${key}=${encodeURIComponent(data[key]).replace(/%20/g, "+")}`)
         .join("&");
-      
-      return pfOutput + (passPhrase ? `&passphrase=${encodeURIComponent(passPhrase)}` : "");
+      return pfOutput + (passPhrase ? `&passphrase=${encodeURIComponent(passPhrase).replace(/%20/g, "+")}` : "");
     };
 
-    const signature = generateSignature(paymentData);
+    const signatureString = buildSignatureString(paymentData, passphrase);
+    const signature = new Md5().update(signatureString).toString();
 
     // Create PayFast form HTML
     const formHtml = `
@@ -175,7 +177,7 @@ Order is pending PayFast payment completion.`;
         <div class="loader"></div>
         <p>Please wait while we redirect you to PayFast for secure payment processing.</p>
         
-        <form action="https://www.payfast.co.za/eng/process" method="post" id="payfast_form">
+        <form action="${payfastMode === 'sandbox' ? 'https://sandbox.payfast.co.za/eng/process' : 'https://www.payfast.co.za/eng/process'}" method="post" id="payfast_form">
           ${Object.entries(paymentData).map(([key, value]) => 
             `<input type="hidden" name="${key}" value="${value}">`
           ).join('')}
