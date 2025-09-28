@@ -14,7 +14,7 @@ import { Footer } from "@/components/Footer";
 import { PersistentFooter } from "@/components/PersistentFooter";
 import { UrgencyBanner } from "@/components/UrgencyBanner";
 import { SocialProof } from "@/components/SocialProof";
-import { GuaranteeBadge } from "@/components/GuaranteeBadge";
+
 import { ExitIntentModal } from "@/components/ExitIntentModal";
 
 const Index = () => {
@@ -35,7 +35,7 @@ const Index = () => {
       <Footer />
       <PersistentFooter />
       <SocialProof />
-      <GuaranteeBadge />
+      
       <ExitIntentModal />
     </div>
   );
