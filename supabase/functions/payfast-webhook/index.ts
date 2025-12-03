@@ -72,10 +72,11 @@ serve(async (req) => {
       status: 200,
     });
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('PayFast webhook error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      `Error: ${error.message}`, 
+      `Error: ${errorMessage}`, 
       {
         headers: corsHeaders,
         status: 500,
