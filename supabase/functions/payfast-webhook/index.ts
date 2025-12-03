@@ -66,6 +66,34 @@ serve(async (req) => {
 
     console.log(`Order ${orderId} updated to status: ${status}`);
 
+    // Send order confirmation email if payment was successful
+    if (status === 'paid') {
+      try {
+        console.log('Triggering order confirmation email for:', orderId);
+        const emailResponse = await fetch(
+          `${Deno.env.get("SUPABASE_URL")}/functions/v1/send-order-confirmation`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${Deno.env.get("SUPABASE_ANON_KEY")}`,
+            },
+            body: JSON.stringify({ order_id: orderId }),
+          }
+        );
+        
+        if (emailResponse.ok) {
+          console.log('Order confirmation email sent successfully');
+        } else {
+          const errorText = await emailResponse.text();
+          console.error('Failed to send order confirmation email:', errorText);
+        }
+      } catch (emailError) {
+        console.error('Error sending order confirmation email:', emailError);
+        // Don't fail the webhook if email fails
+      }
+    }
+
     // Return success response to PayFast
     return new Response('OK', {
       headers: corsHeaders,
