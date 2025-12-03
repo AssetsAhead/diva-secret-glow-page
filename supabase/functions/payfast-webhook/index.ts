@@ -6,6 +6,72 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Format phone number for WhatsApp (ensure it has country code)
+const formatWhatsAppNumber = (phone: string): string => {
+  let cleaned = phone.replace(/\D/g, '');
+  if (cleaned.startsWith('0')) {
+    cleaned = '27' + cleaned.substring(1); // South Africa country code
+  }
+  if (!cleaned.startsWith('27')) {
+    cleaned = '27' + cleaned;
+  }
+  return `whatsapp:+${cleaned}`;
+};
+
+// Send WhatsApp notification to customer
+const sendWhatsAppToCustomer = async (phone: string, orderId: string, packageType: string, amount: number) => {
+  const accountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
+  const authToken = Deno.env.get("TWILIO_AUTH_TOKEN");
+  const fromNumber = Deno.env.get("TWILIO_WHATSAPP_FROM");
+
+  if (!accountSid || !authToken || !fromNumber) {
+    console.log('Twilio credentials not configured, skipping WhatsApp notification');
+    return;
+  }
+
+  const toNumber = formatWhatsAppNumber(phone);
+  const message = `✅ *Payment Confirmed!*
+
+Hi there! Your Diva Secret order has been confirmed.
+
+📦 *Order:* ${orderId}
+🛍️ *Package:* ${packageType}
+💰 *Amount:* R${amount.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}
+
+Your order will be shipped within 24-48 hours. We'll send you tracking updates!
+
+Thank you for choosing Diva Secret! 💜
+
+Questions? Reply to this message or call us.`;
+
+  try {
+    const response = await fetch(
+      `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Basic ' + btoa(`${accountSid}:${authToken}`),
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          To: toNumber,
+          From: fromNumber,
+          Body: message,
+        }),
+      }
+    );
+
+    if (response.ok) {
+      console.log('WhatsApp notification sent to customer:', toNumber);
+    } else {
+      const errorData = await response.text();
+      console.error('Failed to send WhatsApp to customer:', errorData);
+    }
+  } catch (error) {
+    console.error('Error sending WhatsApp to customer:', error);
+  }
+};
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -66,8 +132,16 @@ serve(async (req) => {
 
     console.log(`Order ${orderId} updated to status: ${status}`);
 
-    // Send order confirmation email if payment was successful
+    // Send notifications if payment was successful
     if (status === 'paid') {
+      // Fetch order details for notifications
+      const { data: order } = await supabaseClient
+        .from('orders')
+        .select('*')
+        .eq('order_number', orderId)
+        .maybeSingle();
+
+      // Send order confirmation email
       try {
         console.log('Triggering order confirmation email for:', orderId);
         const emailResponse = await fetch(
@@ -90,7 +164,24 @@ serve(async (req) => {
         }
       } catch (emailError) {
         console.error('Error sending order confirmation email:', emailError);
-        // Don't fail the webhook if email fails
+      }
+
+      // Send WhatsApp notification to customer
+      if (order) {
+        const metadata = order.metadata || {};
+        const payfastData = metadata.payfast_data || metadata.webhook_data || {};
+        const customerPhone = payfastData.cell_number || metadata.customer_phone;
+        
+        if (customerPhone) {
+          await sendWhatsAppToCustomer(
+            customerPhone,
+            orderId,
+            order.package_type,
+            order.amount || 0
+          );
+        } else {
+          console.log('No customer phone number found, skipping WhatsApp notification');
+        }
       }
     }
 
