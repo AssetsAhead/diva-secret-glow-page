@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
-import { Md5 } from "https://deno.land/std@0.190.0/hash/md5.ts";
+import md5 from "https://esm.sh/md5@2.3.0";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -24,18 +25,15 @@ serve(async (req) => {
   try {
     const { amount, package_type, customer_name, customer_email, customer_phone, delivery_address, message } = await req.json() as PaymentRequest;
 
-    // Validate required fields
     if (!amount || !package_type || !customer_name || !customer_email) {
       throw new Error("Missing required fields");
     }
 
-    // Create Supabase client
     const supabaseClient = createClient(
       Deno.env.get("SUPABASE_URL") ?? "",
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    // Save lead to database
     const { data: leadData, error: leadError } = await supabaseClient
       .from('leads')
       .insert({
@@ -53,10 +51,8 @@ serve(async (req) => {
 
     if (leadError) throw leadError;
 
-    // Generate unique order ID
     const order_id = `DSC-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-    // PayFast configuration
     const merchant_id = Deno.env.get("PAYFAST_MERCHANT_ID");
     const merchant_key = Deno.env.get("PAYFAST_MERCHANT_KEY");
     const passphrase = Deno.env.get("PAYFAST_PASSPHRASE") || "";
@@ -66,11 +62,10 @@ serve(async (req) => {
       throw new Error("PayFast merchant credentials not configured");
     }
 
-    // PayFast payment data
-    const paymentData = {
+    const paymentData: Record<string, string> = {
       merchant_id: merchant_id,
       merchant_key: merchant_key,
-      return_url: `${req.headers.get("origin")}/payment-success`,
+      return_url: `${req.headers.get("origin")}/payment-success?order_id=${order_id}`,
       cancel_url: `${req.headers.get("origin")}/payment-cancelled`,
       notify_url: `${Deno.env.get("SUPABASE_URL")}/functions/v1/payfast-webhook`,
       m_payment_id: order_id,
@@ -83,7 +78,6 @@ serve(async (req) => {
       cell_number: customer_phone,
     };
 
-    // Create order record
     const { error: orderError } = await supabaseClient
       .from('orders')
       .insert({
@@ -96,13 +90,15 @@ serve(async (req) => {
         status: 'pending',
         metadata: {
           payfast_data: paymentData,
-          customer_message: message
+          customer_message: message,
+          customer_name: customer_name,
+          customer_email: customer_email,
+          customer_phone: customer_phone
         }
       });
 
     if (orderError) throw orderError;
 
-    // Send WhatsApp notification for new order
     try {
       const twilioAccountSid = Deno.env.get("TWILIO_ACCOUNT_SID");
       const twilioAuthToken = Deno.env.get("TWILIO_AUTH_TOKEN");
@@ -129,7 +125,7 @@ Order is pending PayFast payment completion.`;
           },
           body: new URLSearchParams({
             'From': twilioWhatsAppFrom,
-            'To': 'whatsapp:+27679820321', // Your WhatsApp number
+            'To': 'whatsapp:+27679820321',
             'Body': whatsappMessage
           }).toString()
         });
@@ -139,15 +135,11 @@ Order is pending PayFast payment completion.`;
         } else {
           console.log('WhatsApp notification sent successfully');
         }
-      } else {
-        console.log('Twilio credentials not configured, skipping WhatsApp notification');
       }
     } catch (whatsappError) {
       console.error('Error sending WhatsApp notification:', whatsappError);
-      // Don't fail the order creation if WhatsApp fails
     }
 
-    // Generate PayFast signature (MD5 of the parameter string, including passphrase if set)
     const buildSignatureString = (data: Record<string, string>, passPhrase = "") => {
       const pfOutput = Object.keys(data)
         .filter((key) => data[key] !== "" && data[key] !== undefined)
@@ -158,9 +150,8 @@ Order is pending PayFast payment completion.`;
     };
 
     const signatureString = buildSignatureString(paymentData, passphrase);
-    const signature = new Md5().update(signatureString).toString();
+    const signature = md5(signatureString);
 
-    // Create PayFast form HTML
     const formHtml = `
       <!DOCTYPE html>
       <html>
@@ -199,10 +190,11 @@ Order is pending PayFast payment completion.`;
       status: 200,
     });
 
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('PayFast payment error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return new Response(
-      JSON.stringify({ error: error.message }), 
+      JSON.stringify({ error: errorMessage }), 
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 500,
