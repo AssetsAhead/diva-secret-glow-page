@@ -24,8 +24,30 @@ interface OrderData {
     customer_name?: string;
     customer_email?: string;
     customer_phone?: string;
+    payfast_data?: {
+      name_first?: string;
+      name_last?: string;
+      email_address?: string;
+      cell_number?: string;
+    };
   } | null;
 }
+
+// Helper to extract customer info from metadata
+const getCustomerInfo = (metadata: OrderData['metadata']) => {
+  if (!metadata) return { name: 'Customer', email: 'N/A', phone: undefined };
+  
+  // Check direct fields first, then payfast_data
+  const name = metadata.customer_name || 
+    (metadata.payfast_data?.name_first && metadata.payfast_data?.name_last 
+      ? `${metadata.payfast_data.name_first} ${metadata.payfast_data.name_last}`
+      : metadata.payfast_data?.name_first || 'Customer');
+  
+  const email = metadata.customer_email || metadata.payfast_data?.email_address || 'N/A';
+  const phone = metadata.customer_phone || metadata.payfast_data?.cell_number;
+  
+  return { name, email, phone };
+};
 
 export const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -38,14 +60,16 @@ export const PaymentSuccess = () => {
       const orderId = searchParams.get("order_id");
       
       if (orderId) {
-        const { data, error } = await supabase
-          .from("orders")
-          .select("*")
-          .eq("order_number", orderId)
-          .maybeSingle();
+        try {
+          const { data, error } = await supabase.functions.invoke('get-order', {
+            body: { order_id: orderId }
+          });
 
-        if (!error && data) {
-          setOrderData(data as OrderData);
+          if (!error && data?.order) {
+            setOrderData(data.order as OrderData);
+          }
+        } catch (err) {
+          console.error('Error fetching order:', err);
         }
       }
       setLoading(false);
@@ -85,34 +109,37 @@ export const PaymentSuccess = () => {
           </div>
 
           <div className="space-y-3">
-            {orderData && !loading && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button 
-                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                  >
-                    <FileText className="h-4 w-4 mr-2" />
-                    View & Download Invoice
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-                  <DialogHeader>
-                    <DialogTitle>Invoice</DialogTitle>
-                  </DialogHeader>
-                  <Invoice
-                    orderNumber={orderData.order_number || "N/A"}
-                    customerName={(orderData.metadata as { customer_name?: string })?.customer_name || "Customer"}
-                    customerEmail={(orderData.metadata as { customer_email?: string })?.customer_email || "N/A"}
-                    customerPhone={(orderData.metadata as { customer_phone?: string })?.customer_phone}
-                    packageType={orderData.package_type}
-                    amount={orderData.amount || 0}
-                    deliveryAddress={orderData.delivery_address || undefined}
-                    date={orderData.created_at}
-                    status={orderData.status || "pending"}
-                  />
-                </DialogContent>
-              </Dialog>
-            )}
+            {orderData && !loading && (() => {
+              const customerInfo = getCustomerInfo(orderData.metadata);
+              return (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button 
+                      className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      View & Download Invoice
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Invoice</DialogTitle>
+                    </DialogHeader>
+                    <Invoice
+                      orderNumber={orderData.order_number || "N/A"}
+                      customerName={customerInfo.name}
+                      customerEmail={customerInfo.email}
+                      customerPhone={customerInfo.phone}
+                      packageType={orderData.package_type}
+                      amount={orderData.amount || 0}
+                      deliveryAddress={orderData.delivery_address || undefined}
+                      date={orderData.created_at}
+                      status={orderData.status || "pending"}
+                    />
+                  </DialogContent>
+                </Dialog>
+              );
+            })()}
 
             <Button 
               onClick={() => navigate("/")}
