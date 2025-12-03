@@ -1,4 +1,5 @@
 import { useRef } from "react";
+// Invoice component for PDF generation
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
