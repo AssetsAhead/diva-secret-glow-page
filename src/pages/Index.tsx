@@ -1,9 +1,9 @@
-
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
 import { BenefitsSection } from "@/components/BenefitsSection";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { StemCellEducation } from "@/components/StemCellEducation";
+import { DivaSecretPresentation } from "@/components/DivaSecretPresentation";
 import { VideoSection } from "@/components/VideoSection";
 import { PricingSection } from "@/components/PricingSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
@@ -14,7 +14,6 @@ import { Footer } from "@/components/Footer";
 import { PersistentFooter } from "@/components/PersistentFooter";
 import { UrgencyBanner } from "@/components/UrgencyBanner";
 import { SocialProof } from "@/components/SocialProof";
-
 import { ExitIntentModal } from "@/components/ExitIntentModal";
 
 const Index = () => {
@@ -26,6 +25,7 @@ const Index = () => {
       <BenefitsSection />
       <ProductShowcase />
       <StemCellEducation />
+      <DivaSecretPresentation />
       <VideoSection />
       <PricingSection />
       <TestimonialsSection />
@@ -35,7 +35,6 @@ const Index = () => {
       <Footer />
       <PersistentFooter />
       <SocialProof />
-      
       <ExitIntentModal />
     </div>
   );
