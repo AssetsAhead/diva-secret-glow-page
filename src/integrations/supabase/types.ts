@@ -14,6 +14,56 @@ export type Database = {
   }
   public: {
     Tables: {
+      drip_sequences: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          current_step: number
+          id: string
+          last_sent_at: string | null
+          lead_id: string
+          next_send_at: string
+          sequence_type: string
+          started_at: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: number
+          id?: string
+          last_sent_at?: string | null
+          lead_id: string
+          next_send_at?: string
+          sequence_type: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          current_step?: number
+          id?: string
+          last_sent_at?: string | null
+          lead_id?: string
+          next_send_at?: string
+          sequence_type?: string
+          started_at?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "drip_sequences_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       email_campaigns: {
         Row: {
           content: string
