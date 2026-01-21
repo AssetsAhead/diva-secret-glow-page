@@ -13,9 +13,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Lock, RefreshCw, LogOut, Mail, Users } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
+import { SequenceControls } from "@/components/admin/SequenceControls";
+import { LeadsManagement } from "@/components/admin/LeadsManagement";
 
 const ADMIN_PASSWORD = "DivaAdmin2024!";
 
@@ -76,9 +79,7 @@ export default function Admin() {
     setLoading(true);
     try {
       const { data, error } = await supabase.functions.invoke("get-drip-sequences");
-      
       if (error) throw error;
-      
       setSequences(data?.sequences || []);
     } catch (error) {
       console.error("Error fetching sequences:", error);
@@ -165,109 +166,136 @@ export default function Admin() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Total Sequences</p>
-                  <p className="text-3xl font-bold">{sequences.length}</p>
-                </div>
-                <Mail className="w-10 h-10 text-purple-500 opacity-50" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Active Sequences</p>
-                  <p className="text-3xl font-bold">
-                    {sequences.filter(s => s.status === "active").length}
-                  </p>
-                </div>
-                <Users className="w-10 h-10 text-green-500 opacity-50" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Completed</p>
-                  <p className="text-3xl font-bold">
-                    {sequences.filter(s => s.status === "completed").length}
-                  </p>
-                </div>
-                <Mail className="w-10 h-10 text-blue-500 opacity-50" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <Tabs defaultValue="sequences" className="space-y-6">
+          <TabsList className="grid w-full max-w-md grid-cols-2">
+            <TabsTrigger value="sequences" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              Drip Sequences
+            </TabsTrigger>
+            <TabsTrigger value="leads" className="flex items-center gap-2">
+              <Users className="w-4 h-4" />
+              Leads
+            </TabsTrigger>
+          </TabsList>
 
-        {/* Drip Sequences Table */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Drip Sequences</CardTitle>
-            <Button variant="outline" size="sm" onClick={fetchSequences} disabled={loading}>
-              <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
-              Refresh
-            </Button>
-          </CardHeader>
-          <CardContent>
-            {sequences.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground">
-                <Mail className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>No drip sequences found</p>
-                <p className="text-sm">Sequences will appear here when leads sign up</p>
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Lead Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Sequence Type</TableHead>
-                      <TableHead>Progress</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Next Send</TableHead>
-                      <TableHead>Started</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {sequences.map((seq) => (
-                      <TableRow key={seq.id}>
-                        <TableCell className="font-medium">
-                          {seq.lead?.name || "Unknown"}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {seq.lead?.email || "-"}
-                        </TableCell>
-                        <TableCell>{getSequenceTypeBadge(seq.sequence_type)}</TableCell>
-                        <TableCell>
-                          <span className="font-medium">
-                            Step {seq.current_step} / {getTotalSteps(seq.sequence_type)}
-                          </span>
-                        </TableCell>
-                        <TableCell>{getStatusBadge(seq.status)}</TableCell>
-                        <TableCell>
-                          {seq.status === "completed" 
-                            ? "-" 
-                            : format(new Date(seq.next_send_at), "MMM d, HH:mm")}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground">
-                          {format(new Date(seq.started_at), "MMM d, yyyy")}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+          <TabsContent value="sequences" className="space-y-6">
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Total Sequences</p>
+                      <p className="text-3xl font-bold">{sequences.length}</p>
+                    </div>
+                    <Mail className="w-10 h-10 text-purple-500 opacity-50" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Active Sequences</p>
+                      <p className="text-3xl font-bold">
+                        {sequences.filter(s => s.status === "active").length}
+                      </p>
+                    </div>
+                    <Users className="w-10 h-10 text-green-500 opacity-50" />
+                  </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground">Completed</p>
+                      <p className="text-3xl font-bold">
+                        {sequences.filter(s => s.status === "completed").length}
+                      </p>
+                    </div>
+                    <Mail className="w-10 h-10 text-blue-500 opacity-50" />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Drip Sequences Table */}
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle>Drip Sequences</CardTitle>
+                <Button variant="outline" size="sm" onClick={fetchSequences} disabled={loading}>
+                  <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+                  Refresh
+                </Button>
+              </CardHeader>
+              <CardContent>
+                {sequences.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground">
+                    <Mail className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                    <p>No drip sequences found</p>
+                    <p className="text-sm">Sequences will appear here when leads sign up</p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Lead Name</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead>Sequence Type</TableHead>
+                          <TableHead>Progress</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead>Next Send</TableHead>
+                          <TableHead>Started</TableHead>
+                          <TableHead>Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {sequences.map((seq) => (
+                          <TableRow key={seq.id}>
+                            <TableCell className="font-medium">
+                              {seq.lead?.name || "Unknown"}
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">
+                              {seq.lead?.email || "-"}
+                            </TableCell>
+                            <TableCell>{getSequenceTypeBadge(seq.sequence_type)}</TableCell>
+                            <TableCell>
+                              <span className="font-medium">
+                                Step {seq.current_step} / {getTotalSteps(seq.sequence_type)}
+                              </span>
+                            </TableCell>
+                            <TableCell>{getStatusBadge(seq.status)}</TableCell>
+                            <TableCell>
+                              {seq.status === "completed" 
+                                ? "-" 
+                                : format(new Date(seq.next_send_at), "MMM d, HH:mm")}
+                            </TableCell>
+                            <TableCell className="text-muted-foreground">
+                              {format(new Date(seq.started_at), "MMM d, yyyy")}
+                            </TableCell>
+                            <TableCell>
+                              <SequenceControls
+                                sequenceId={seq.id}
+                                status={seq.status}
+                                onUpdate={fetchSequences}
+                              />
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="leads">
+            <LeadsManagement />
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );
