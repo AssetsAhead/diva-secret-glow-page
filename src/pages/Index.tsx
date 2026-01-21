@@ -22,10 +22,10 @@ const Index = () => {
       <UrgencyBanner />
       <Navbar />
       <HeroSection />
+      <DivaSecretPresentation />
       <BenefitsSection />
       <ProductShowcase />
       <StemCellEducation />
-      <DivaSecretPresentation />
       <VideoSection />
       <PricingSection />
       <TestimonialsSection />
