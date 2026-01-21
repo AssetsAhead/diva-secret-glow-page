@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.process-drip-emails]
 verify_jwt = false
+
+[functions.get-drip-sequences]
+verify_jwt = false
