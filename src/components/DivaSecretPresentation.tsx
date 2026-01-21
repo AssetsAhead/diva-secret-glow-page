@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
@@ -15,11 +15,21 @@ import {
   Activity,
   Bone,
   Apple,
-  TreeDeciduous
+  TreeDeciduous,
+  Play,
+  Pause,
+  RotateCcw
 } from "lucide-react";
+
+const SLIDE_DURATION = 8000; // 8 seconds per slide
 
 export const DivaSecretPresentation = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right' | 'zoom'>('zoom');
+  const progressInterval = useRef<NodeJS.Timeout | null>(null);
+  const slideTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const heroIngredients = [
     {
@@ -368,12 +378,99 @@ export const DivaSecretPresentation = () => {
     }
   ];
 
+  const clearTimers = useCallback(() => {
+    if (progressInterval.current) {
+      clearInterval(progressInterval.current);
+      progressInterval.current = null;
+    }
+    if (slideTimeout.current) {
+      clearTimeout(slideTimeout.current);
+      slideTimeout.current = null;
+    }
+  }, []);
+
+  const startAutoPlay = useCallback(() => {
+    clearTimers();
+    setProgress(0);
+
+    const progressStep = 100 / (SLIDE_DURATION / 50);
+    progressInterval.current = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) return 100;
+        return prev + progressStep;
+      });
+    }, 50);
+
+    slideTimeout.current = setTimeout(() => {
+      setSlideDirection('right');
+      setCurrentSlide(prev => (prev + 1) % slides.length);
+    }, SLIDE_DURATION);
+  }, [clearTimers, slides.length]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      startAutoPlay();
+    } else {
+      clearTimers();
+    }
+
+    return () => clearTimers();
+  }, [isPlaying, currentSlide, startAutoPlay, clearTimers]);
+
+  const togglePlay = () => {
+    setIsPlaying(prev => !prev);
+  };
+
+  const resetPresentation = () => {
+    setIsPlaying(false);
+    setCurrentSlide(0);
+    setProgress(0);
+    clearTimers();
+  };
+
   const nextSlide = () => {
+    setSlideDirection('right');
     setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setProgress(0);
+    if (isPlaying) {
+      startAutoPlay();
+    }
   };
 
   const prevSlide = () => {
+    setSlideDirection('left');
     setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setProgress(0);
+    if (isPlaying) {
+      startAutoPlay();
+    }
+  };
+
+  const goToSlide = (index: number) => {
+    if (index > currentSlide) {
+      setSlideDirection('right');
+    } else if (index < currentSlide) {
+      setSlideDirection('left');
+    } else {
+      setSlideDirection('zoom');
+    }
+    setCurrentSlide(index);
+    setProgress(0);
+    if (isPlaying) {
+      startAutoPlay();
+    }
+  };
+
+  const getAnimationClass = () => {
+    switch (slideDirection) {
+      case 'left':
+        return 'animate-slide-in-left';
+      case 'right':
+        return 'animate-slide-in-right';
+      case 'zoom':
+      default:
+        return 'animate-zoom-in';
+    }
   };
 
   return (
@@ -393,47 +490,97 @@ export const DivaSecretPresentation = () => {
         {/* Presentation Container */}
         <div className="bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10 overflow-hidden">
           
+          {/* Progress Bar */}
+          {isPlaying && (
+            <div className="h-1 bg-white/10 relative overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-yellow-400 to-pink-500 transition-all duration-50 ease-linear"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          )}
+
           {/* Slide Content */}
-          <div className="p-8 md:p-12 min-h-[600px] flex items-center justify-center">
-            <div className="w-full animate-fade-in" key={currentSlide}>
+          <div className="p-8 md:p-12 min-h-[600px] flex items-center justify-center overflow-hidden">
+            <div 
+              className={`w-full ${getAnimationClass()}`} 
+              key={currentSlide}
+            >
               {slides[currentSlide].content}
             </div>
           </div>
 
           {/* Navigation */}
-          <div className="bg-white/5 border-t border-white/10 p-4 flex items-center justify-between">
-            <Button
-              variant="ghost"
-              className="text-white hover:bg-white/10"
-              onClick={prevSlide}
-            >
-              <ChevronLeft className="w-5 h-5 mr-2" />
-              Previous
-            </Button>
-
-            {/* Slide Indicators */}
-            <div className="flex gap-2">
-              {slides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentSlide 
-                      ? 'bg-yellow-400 w-8' 
-                      : 'bg-white/30 hover:bg-white/50'
-                  }`}
-                />
-              ))}
+          <div className="bg-white/5 border-t border-white/10 p-4">
+            {/* Top Controls Row */}
+            <div className="flex items-center justify-center gap-4 mb-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`text-white hover:bg-white/10 ${isPlaying ? 'bg-yellow-400/20' : ''}`}
+                onClick={togglePlay}
+              >
+                {isPlaying ? (
+                  <>
+                    <Pause className="w-4 h-4 mr-2" />
+                    Pause
+                  </>
+                ) : (
+                  <>
+                    <Play className="w-4 h-4 mr-2" />
+                    Auto-Play
+                  </>
+                )}
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-white/10"
+                onClick={resetPresentation}
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                Restart
+              </Button>
+              <span className="text-white/60 text-sm">
+                Slide {currentSlide + 1} of {slides.length}
+              </span>
             </div>
 
-            <Button
-              variant="ghost"
-              className="text-white hover:bg-white/10"
-              onClick={nextSlide}
-            >
-              Next
-              <ChevronRight className="w-5 h-5 ml-2" />
-            </Button>
+            {/* Navigation Row */}
+            <div className="flex items-center justify-between">
+              <Button
+                variant="ghost"
+                className="text-white hover:bg-white/10"
+                onClick={prevSlide}
+              >
+                <ChevronLeft className="w-5 h-5 mr-2" />
+                Previous
+              </Button>
+
+              {/* Slide Indicators */}
+              <div className="flex gap-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`h-3 rounded-full transition-all duration-300 ${
+                      index === currentSlide 
+                        ? 'bg-yellow-400 w-8' 
+                        : 'bg-white/30 hover:bg-white/50 w-3'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <Button
+                variant="ghost"
+                className="text-white hover:bg-white/10"
+                onClick={nextSlide}
+              >
+                Next
+                <ChevronRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
           </div>
         </div>
 
