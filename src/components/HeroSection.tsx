@@ -1,8 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star, ChevronDown } from "lucide-react";
 import { OrderModal } from "./OrderModal";
 import heroBg from "@/assets/bg-plants.jpg";
+
 export const HeroSection = () => {
+  const scrollToPresentation = () => {
+    document.getElementById('presentation')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return <section className="relative min-h-screen text-white overflow-hidden bg-cover bg-center" style={{ backgroundImage: `url(${heroBg})` }}>
       <div className="absolute inset-0 bg-black opacity-60"></div>
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
@@ -37,12 +42,24 @@ export const HeroSection = () => {
               restores, rejuvenates and reactivates your body's healing power.
             </p>
             
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <OrderModal>
                 <Button size="lg" className="bg-gradient-to-r from-green-500 to-lime-500 hover:from-green-600 hover:to-lime-600 text-white px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105">
                   Order with PayFast
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </OrderModal>
+              
+              <Button 
+                size="lg" 
+                variant="outline"
+                onClick={scrollToPresentation}
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold transition-all duration-300"
+              >
+                Learn More
+                <ChevronDown className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
             
             <div className="text-center lg:text-left">
               <p className="text-sm text-gray-200 mb-2">Starting from only</p>
