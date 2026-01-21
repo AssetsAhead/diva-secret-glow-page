@@ -357,10 +357,12 @@ serve(async (req) => {
       }
 
       const currentStep = sequence.current_step;
-      const emailContent = CUSTOMER_DRIP_EMAILS[currentStep - 1];
+      const sequenceType = sequence.sequence_type || 'customer_welcome';
+      const emailContent = getEmailContent(sequenceType, currentStep);
+      const totalSteps = getTotalSteps(sequenceType);
 
       if (!emailContent) {
-        console.log(`No email content for step ${currentStep}, marking as completed`);
+        console.log(`No email content for step ${currentStep} of ${sequenceType}, marking as completed`);
         await supabaseClient
           .from("drip_sequences")
           .update({
@@ -375,7 +377,7 @@ serve(async (req) => {
 
       try {
         // Send the email
-        console.log(`Sending day ${emailContent.day} email to ${lead.email}`);
+        console.log(`Sending ${sequenceType} day ${emailContent.day} email to ${lead.email}`);
         
         const emailResponse = await resend.emails.send({
           from: "Diva Secret <onboarding@resend.dev>",
@@ -387,10 +389,10 @@ serve(async (req) => {
         console.log("Email sent successfully:", emailResponse);
         results.sent++;
 
-        // Calculate next send time
-        const isLastEmail = currentStep >= CUSTOMER_DRIP_EMAILS.length;
+        // Calculate next send time using sequence-specific intervals
+        const isLastEmail = currentStep >= totalSteps;
         const nextStep = currentStep + 1;
-        const nextIntervalHours = SEND_INTERVALS_HOURS[currentStep] || 24;
+        const nextIntervalHours = getNextIntervalHours(sequenceType, currentStep);
         const nextSendAt = new Date(Date.now() + nextIntervalHours * 60 * 60 * 1000);
 
         // Update sequence
