@@ -23,3 +23,9 @@ verify_jwt = false
 
 [functions.get-drip-sequences]
 verify_jwt = false
+
+[functions.update-drip-sequence]
+verify_jwt = false
+
+[functions.get-leads]
+verify_jwt = false
